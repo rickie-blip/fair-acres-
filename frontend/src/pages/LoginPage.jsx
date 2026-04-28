@@ -24,18 +24,6 @@ export default function LoginPage({ onLogin }) {
   return (
     <div className="card col">
       <div style={{ fontSize: 18, fontWeight: 900 }}>Staff & Management login</div>
-      <div style={{ color: "var(--muted)", fontSize: 13 }}>
-        Use seeded accounts for local dev:
-        
-        <div style={{ marginTop: 8, display: "grid", gap: 6 }}>
-          <div>
-            <span className="pill">Admin</span> <span style={{ color: "var(--muted)" }}>admin@fairacres.local / Admin123!</span>
-          </div>
-          <div>
-            <span className="pill">Staff</span> <span style={{ color: "var(--muted)" }}>staff@fairacres.local / Staff123!</span>
-          </div>
-        </div>
-      </div>
 
       {error ? (
         <div className="card" style={{ background: "rgba(239,68,68,.10)", borderColor: "rgba(239,68,68,.25)" }}>

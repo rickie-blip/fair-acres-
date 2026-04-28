@@ -1,5 +1,4 @@
 import express from "express";
-import bcrypt from "bcryptjs";
 import { pool } from "../db/pool.js";
 import { signAccessToken } from "../auth/jwt.js";
 import { loginSchema } from "../validation/schemas.js";
@@ -13,15 +12,15 @@ authRouter.post("/login", async (req, res) => {
   const { email, phone, password, pin } = v.value;
 
   const q = email
-    ? { text: "SELECT id, name, role, email, phone, password_hash FROM users WHERE lower(email)=lower($1) LIMIT 1", values: [email] }
-    : { text: "SELECT id, name, role, email, phone, password_hash FROM users WHERE phone=$1 LIMIT 1", values: [phone] };
+    ? { text: "SELECT id, name, role, email, phone, password FROM users WHERE lower(email)=lower($1) LIMIT 1", values: [email] }
+    : { text: "SELECT id, name, role, email, phone, password FROM users WHERE phone=$1 LIMIT 1", values: [phone] };
 
   const userRes = await pool.query(q);
   const u = userRes.rows[0];
   if (!u) return res.status(401).json({ error: "invalid_credentials" });
 
   const secret = email ? password : pin;
-  const ok = await bcrypt.compare(secret, u.password_hash);
+  const ok = secret === u.password;
   if (!ok) return res.status(401).json({ error: "invalid_credentials" });
 
   const token = signAccessToken({ sub: u.id, role: u.role, name: u.name });
@@ -30,4 +29,3 @@ authRouter.post("/login", async (req, res) => {
     user: { id: u.id, name: u.name, role: u.role, email: u.email, phone: u.phone }
   });
 });
-
