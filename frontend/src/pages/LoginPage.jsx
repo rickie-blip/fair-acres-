@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { apiFetch } from "../api.js";
+import { apiFetch } from "../services/api.js";
 
 export default function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");

@@ -1,0 +1,12 @@
+# dependencies
+node_modules/
+
+# env
+.env
+
+# editor junk
+.history/
+
+# build
+dist/
+build/node_modules/
