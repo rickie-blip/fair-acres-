@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { apiFetch } from "../api.js";
+import { apiFetch } from "../services/api.js";
 
 export default function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -26,6 +26,7 @@ export default function LoginPage({ onLogin }) {
       <div style={{ fontSize: 18, fontWeight: 900 }}>Staff & Management login</div>
       <div style={{ color: "var(--muted)", fontSize: 13 }}>
         Use seeded accounts for local dev:
+        
         <div style={{ marginTop: 8, display: "grid", gap: 6 }}>
           <div>
             <span className="pill">Admin</span> <span style={{ color: "var(--muted)" }}>admin@fairacres.local / Admin123!</span>

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { apiFetch } from "../api.js";
+import { apiFetch } from "../services/api.js";
 
 export default function AdminDashboardPage({ token, user }) {
   const [complaints, setComplaints] = useState([]);

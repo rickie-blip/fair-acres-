@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
-import { apiFetch } from "../api.js";
-import { compressImageToDataUrl } from "../imageCompress.js";
+import { apiFetch } from "../services/api.js";
+import { compressImageToDataUrl } from "../utils/imageCompress.js";
 import { useLocation } from "react-router-dom";
 
 function useRoomFromQuery() {
