@@ -1,4 +1,5 @@
 import { pool } from "./pool.js";
+import { config } from "../config.js";
 
 const sql = `
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -27,7 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
   role user_role NOT NULL,
   phone text,
   email text,
-  password_hash text NOT NULL,
+  password text NOT NULL,
   created_at timestamptz NOT NULL DEFAULT now(),
   CONSTRAINT users_phone_or_email_chk CHECK (phone IS NOT NULL OR email IS NOT NULL)
 );
@@ -85,6 +86,12 @@ CREATE INDEX IF NOT EXISTS notifications_created_at_idx ON notifications (create
 `;
 
 async function main() {
+  if (config.useJsonDb) {
+    await pool.query("SELECT id, name, role, email, phone, password FROM users WHERE lower(email)=lower($1) LIMIT 1", ["admin@fairacres.local"]);
+    await pool.end();
+    console.log(`JSON DB ready at ${config.jsonDbPath}`);
+    return;
+  }
   await pool.query(sql);
   await pool.end();
   console.log("Migrations applied.");
@@ -95,4 +102,3 @@ main().catch(async (err) => {
   try { await pool.end(); } catch {}
   process.exit(1);
 });
-
